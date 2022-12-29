@@ -11,8 +11,7 @@ export const FeedbackOptions = () => {
   const feedBack = useSelector(state => state);
   const dispatch = useDispatch();
   const name = Object.keys(feedBack);
-  console.log(feedBack);
-  console.log(clearFeedback());
+
   const addNewFeedback = event => {
     const id = event.target.id;
 

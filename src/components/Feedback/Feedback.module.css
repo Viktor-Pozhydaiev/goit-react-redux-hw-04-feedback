@@ -1,0 +1,13 @@
+.btn__list {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+.btn__item {
+  margin-right: 5px;
+}
+.btn__style {
+  border-radius: 5px;
+  padding: 10px;
+  background-color: darkturquoise;
+}

@@ -1,30 +1,59 @@
 import css from './Feedback.module.css';
-import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addBad,
+  addGood,
+  addNeutral,
+  clearFeedback,
+} from 'redux/feedbackSlice';
 
-export const FeedbackOptions = ({
-  onLeaveFeedback,
-  options,
-  id = nanoid(),
-}) => {
+export const FeedbackOptions = () => {
+  const feedBack = useSelector(state => state);
+  const dispatch = useDispatch();
+  const name = Object.keys(feedBack);
+  console.log(feedBack);
+  console.log(clearFeedback());
+  const addNewFeedback = event => {
+    const id = event.target.id;
+
+    switch (id) {
+      case 'good':
+        dispatch(addGood(1));
+        break;
+
+      case 'neutral':
+        dispatch(addNeutral(1));
+        break;
+
+      case 'bad':
+        dispatch(addBad(1));
+        break;
+      default:
+        console.warn(`${id} pleas check your id`);
+    }
+  };
+
   return (
     <ul className={css.btn__list}>
-      {options.map(option => (
-        <li key={option} className={css.btn__item}>
+      {name.map(name => (
+        <li key={name} className={css.btn__item}>
           <button
-            id={option}
+            id={name}
             type="button"
             className={css.btn__style}
-            onClick={onLeaveFeedback}
+            onClick={addNewFeedback}
           >
-            {option}
+            {name}
           </button>
         </li>
       ))}
+      <button
+        className={css.btn__style}
+        type="button"
+        onClick={() => dispatch(clearFeedback())}
+      >
+        Clear
+      </button>
     </ul>
   );
-};
-FeedbackOptions.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.string.isRequired),
-  onLeaveFeedback: PropTypes.func.isRequired,
 };
